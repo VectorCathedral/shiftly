@@ -13,6 +13,7 @@ import { Route as SigninRouteImport } from './routes/signin'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppTeamRouteImport } from './routes/_app.team'
+import { Route as AppMyScheduleRouteImport } from './routes/_app.my-schedule'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppCalendarRouteImport } from './routes/_app.calendar'
 
@@ -35,6 +36,11 @@ const AppTeamRoute = AppTeamRouteImport.update({
   path: '/team',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMyScheduleRoute = AppMyScheduleRouteImport.update({
+  id: '/my-schedule',
+  path: '/my-schedule',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
+  '/my-schedule': typeof AppMyScheduleRoute
   '/team': typeof AppTeamRoute
 }
 export interface FileRoutesByTo {
@@ -58,6 +65,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
+  '/my-schedule': typeof AppMyScheduleRoute
   '/team': typeof AppTeamRoute
 }
 export interface FileRoutesById {
@@ -67,13 +75,20 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/_app/calendar': typeof AppCalendarRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/my-schedule': typeof AppMyScheduleRoute
   '/_app/team': typeof AppTeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signin' | '/calendar' | '/dashboard' | '/team'
+  fullPaths:
+    | '/'
+    | '/signin'
+    | '/calendar'
+    | '/dashboard'
+    | '/my-schedule'
+    | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/calendar' | '/dashboard' | '/team'
+  to: '/' | '/signin' | '/calendar' | '/dashboard' | '/my-schedule' | '/team'
   id:
     | '__root__'
     | '/'
@@ -81,6 +96,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/_app/calendar'
     | '/_app/dashboard'
+    | '/_app/my-schedule'
     | '/_app/team'
   fileRoutesById: FileRoutesById
 }
@@ -120,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTeamRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/my-schedule': {
+      id: '/_app/my-schedule'
+      path: '/my-schedule'
+      fullPath: '/my-schedule'
+      preLoaderRoute: typeof AppMyScheduleRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -140,12 +163,14 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppCalendarRoute: typeof AppCalendarRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppMyScheduleRoute: typeof AppMyScheduleRoute
   AppTeamRoute: typeof AppTeamRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppCalendarRoute: AppCalendarRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppMyScheduleRoute: AppMyScheduleRoute,
   AppTeamRoute: AppTeamRoute,
 }
 
