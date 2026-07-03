@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppTeamRouteImport } from './routes/_app.team'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppCalendarRouteImport } from './routes/_app.calendar'
 
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
+  '/team': typeof AppTeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
   '/calendar': typeof AppCalendarRoute
   '/dashboard': typeof AppDashboardRoute
+  '/team': typeof AppTeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +67,13 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/_app/calendar': typeof AppCalendarRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/team': typeof AppTeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signin' | '/calendar' | '/dashboard'
+  fullPaths: '/' | '/signin' | '/calendar' | '/dashboard' | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/calendar' | '/dashboard'
+  to: '/' | '/signin' | '/calendar' | '/dashboard' | '/team'
   id:
     | '__root__'
     | '/'
@@ -72,6 +81,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/_app/calendar'
     | '/_app/dashboard'
+    | '/_app/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -103,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/team': {
+      id: '/_app/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -123,11 +140,13 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppCalendarRoute: typeof AppCalendarRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppTeamRoute: typeof AppTeamRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppCalendarRoute: AppCalendarRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppTeamRoute: AppTeamRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
