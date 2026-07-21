@@ -31,19 +31,19 @@ function Dashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Upload your monthly schedule PDF.</p>
+        <p className="text-sm text-muted-foreground">Upload your monthly schedule HTML file.</p>
       </div>
 
       <Card className="p-6">
         <h2 className="font-medium">Upload schedule</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Select a PDF file. The backend will parse it and populate your shifts.
+          Select a HTML file. The backend will parse it and populate your shifts.
         </p>
         <div className="mt-4 flex items-center gap-3">
           <input
             id="file-input"
             type="file"
-            accept="application/pdf"
+            accept="application/html"
             className="hidden"
             onChange={onFileChange}
           />
