@@ -1,6 +1,9 @@
 // Mock data + placeholder API functions.
 // Replace these with real API calls to the Python backend later.
 
+import { getUser } from "@/lib/auth";
+
+const user = getUser();
 export type ShiftType = "Morning" | "Afternoon" | "Night";
 export type Skill = "Voice" | "Chat";
 
@@ -78,6 +81,10 @@ export async function uploadSchedule(file: File) {
     const formData = new FormData();
 
     formData.append("file", file);
+    
+    if (user){
+      formData.append("email",user.email);
+    }
 
     const response = await fetch("http://localhost:8000/upload", {
         method: "POST",

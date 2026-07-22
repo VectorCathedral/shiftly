@@ -20,8 +20,6 @@ function Dashboard() {
     setFilename(file.name);
     setStatus("uploading");
     console.log(file);
-    const text = await file.text();
-    console.log(text);
     try {
       const res = await uploadSchedule(file);
       setStatus(res.ok ? "success" : "error");
