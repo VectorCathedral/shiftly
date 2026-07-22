@@ -19,9 +19,11 @@ function Dashboard() {
     if (!file) return;
     setFilename(file.name);
     setStatus("uploading");
+    console.log(file);
+    const text = await file.text();
+    console.log(text);
     try {
       const res = await uploadSchedule(file);
-      console.log(file);
       setStatus(res.ok ? "success" : "error");
     } catch {
       setStatus("error");
