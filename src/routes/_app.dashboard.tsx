@@ -46,7 +46,7 @@ function Dashboard() {
           <input
             id="file-input"
             type="file"
-            accept="application/html"
+            accept=".html"
             className="hidden"
             onChange={onFileChange}
           />
