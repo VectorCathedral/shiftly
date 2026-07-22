@@ -86,13 +86,16 @@ export async function uploadSchedule(file: File) {
       formData.append("email",user.email);
     }
 
-    const response = await fetch("http://localhost:8000/upload", {
+    const response =await fetch("http://localhost:8000/upload", {
         method: "POST",
         body: formData,
     });
 
     return response.json();
 }
+
+
+
 
 export async function fetchTeamSchedule(employeeId?: string): Promise<Shift[]> {
   // TODO: GET /api/shifts?employeeId=...
