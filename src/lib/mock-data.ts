@@ -74,10 +74,17 @@ export const shifts: Shift[] = buildMockShifts();
 
 // ---- Placeholder API functions ----
 
-export async function uploadSchedule(file: File): Promise<{ ok: boolean; filename: string }> {
-  // TODO: POST file to backend for PDF parsing
-  await new Promise((r) => setTimeout(r, 800));
-  return { ok: true, filename: file.name };
+export async function uploadSchedule(file: File) {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const response = await fetch("http://localhost:8000/upload", {
+        method: "POST",
+        body: formData,
+    });
+
+    return response.json();
 }
 
 export async function fetchTeamSchedule(employeeId?: string): Promise<Shift[]> {
