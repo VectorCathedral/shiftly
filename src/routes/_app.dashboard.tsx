@@ -48,7 +48,7 @@ function Dashboard() {
             onChange={onFileChange}
           />
           <Button asChild>
-            <label htmlFor="file-input" className="cursor-pointer">Choose HTMl</label>
+            <label htmlFor="file-input" className="cursor-pointer">Choose HTML</label>
           </Button>
           {filename && <span className="text-sm">{filename}</span>}
         </div>
@@ -64,8 +64,11 @@ function Dashboard() {
                     : "text-muted-foreground"
               }
             >
+
+
+          
               {status === "uploading" && "Uploading…"}
-              {status === "success" && "Uploaded successfully! (Please check you shift in the calender tab)"}
+              {status === "success" && "Uploaded successfully! (Please check your shift in the calendar tab)"}
               {status === "error" && "Upload failed"}
             </span>
           </div>
