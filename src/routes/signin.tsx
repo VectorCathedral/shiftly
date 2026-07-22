@@ -12,7 +12,7 @@ export const Route = createFileRoute("/signin")({
 
 function SignIn() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("alex@shiftsync.io");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("password");
 
   useEffect(() => {
