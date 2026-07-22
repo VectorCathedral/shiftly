@@ -21,6 +21,7 @@ function Dashboard() {
     setStatus("uploading");
     try {
       const res = await uploadSchedule(file);
+      console.log(file);
       setStatus(res.ok ? "success" : "error");
     } catch {
       setStatus("error");
