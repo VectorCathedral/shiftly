@@ -35,12 +35,13 @@ function SignIn() {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-          <div className="space-y-2">
+
+        <!--  <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          </div>
+          </div>-->
+
           <Button type="submit" className="w-full">Sign in</Button>
-          <p className="text-xs text-muted-foreground">Mock auth — any credentials work.</p>
         </form>
       </Card>
     </div>
