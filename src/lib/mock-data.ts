@@ -86,7 +86,7 @@ export async function uploadSchedule(file: File) {
       formData.append("email",user.email);
     }
 
-    const response =await fetch("http://16.28.2.19:8000/upload", {
+    const response =await fetch("http://16.28.2.192:8000/upload", {
         method: "POST",
         body: formData,
     });
