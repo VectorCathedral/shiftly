@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { uploadSchedule } from "@/lib/mock-data";
+import { uploadSchedule } from "@/lib/api";
 
 export const Route = createFileRoute("/_app/dashboard")({
   component: Dashboard,

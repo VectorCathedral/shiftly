@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo } from "react";
-import { shifts as allShifts } from "@/lib/mock-data";
+import { Shift } from "@/lib/types";
+import {fetchTeamSchedule } from "@/lib/api";
+import { useState,useMemo,useEffect } from "react";
 import { ShiftCard } from "@/components/ShiftCard";
 import { Card } from "@/components/ui/card";
 
@@ -8,7 +9,27 @@ export const Route = createFileRoute("/_app/calendar")({
   component: CalendarPage,
 });
 
+
+
+
 function CalendarPage() {
+const [allShifts, setAllShifts] = useState<Shift[]>([]);
+const [loading, setLoading] = useState(true);
+ useEffect(() => {
+    async function loadShifts() {
+      try {
+        const data = await fetchTeamSchedule();
+        setAllShifts(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadShifts();
+  }, []);
+
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();
@@ -30,13 +51,16 @@ function CalendarPage() {
   const shiftsByDate = useMemo(() => {
     const map: Record<string, typeof allShifts> = {};
     for (const s of allShifts) {
-      (map[s.date] ||= []).push(s);
+      (map[s.shift_date] ||= []).push(s);
     }
     return map;
-  }, []);
+  }, [allShifts]);
 
   const dayKey = (d: number) =>
     `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  if (loading) {
+  return <div>Loading shifts...</div>;
+}
 
   return (
     <div className="space-y-6">
@@ -61,7 +85,7 @@ function CalendarPage() {
                     <div className="mb-1 text-xs text-muted-foreground">{day}</div>
                     <div className="space-y-1">
                       {dayShifts.map((s) => (
-                        <ShiftCard key={s.id} shift={s} />
+                        <ShiftCard key={s.shift_id} shift={s} />
                       ))}
                     </div>
                   </>
