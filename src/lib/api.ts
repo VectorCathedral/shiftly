@@ -30,7 +30,8 @@ export async function fetchTeamSchedule(): Promise<Shift[]> {
 
   }
 
-  return await response.json();
+    const data=await response.json()
+    return data.shifts;
 }
 
 
