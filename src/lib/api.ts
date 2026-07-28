@@ -1,6 +1,6 @@
 
 import { getUser } from "@/lib/auth";
-import { Shift } from "./types";
+import { Shift,Employee } from "./types";
 
 export async function uploadSchedule(file: File) {
     const formData = new FormData();
@@ -21,24 +21,49 @@ export async function uploadSchedule(file: File) {
 
 
 
-
 export async function fetchMySchedule(): Promise<Shift[]> {
-  const user=getUser();
+    const user = getUser();
 
-  const response= await fetch(`http://16.28.2.192:8000/myshifts?email=${encodeURIComponent(user.email)}`);
-  
+    if (!user) {
+        throw new Error("User not logged in");
+    }
+
+    const response = await fetch(
+        `http://16.28.2.192:8000/myshifts?email=${encodeURIComponent(user.email)}`
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch shifts");
+    }
+
+    const data = await response.json();
+    return data.shifts;
+}
+
+
+
+export async function fetchTeam(): Promise<Employee[]> {
+  const response= await fetch("http://16.28.2.192:8000/team");
+
   if (!response.ok){
     throw new Error ("Failed to fetch shifts");
 
   }
 
     const data=await response.json()
-    return data.shifts;
+    return data.team;
+
 }
 
+export async function fetchEmployeeSchedule(agentId: number): Promise<Shift[]> {
+    const response = await fetch(
+        `http://16.28.2.192:8000/team/${agentId}/shifts`
+    );
 
+    if (!response.ok) {
+        throw new Error("Failed to fetch shifts");
+    }
 
-// export async function fetchEmployees(): Promise<Employee[]> {
-//   await new Promise((r) => setTimeout(r, 100));
-//   return employees;
-// }
+    const data = await response.json();
+    return data.shifts;
+}
