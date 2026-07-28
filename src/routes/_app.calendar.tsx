@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Shift } from "@/lib/types";
-import {fetchTeamSchedule } from "@/lib/api";
+import {fetchMySchedule } from "@/lib/api";
 import { useState,useMemo,useEffect } from "react";
 import { ShiftCard } from "@/components/ShiftCard";
 import { Card } from "@/components/ui/card";
@@ -18,7 +18,7 @@ const [loading, setLoading] = useState(true);
  useEffect(() => {
     async function loadShifts() {
       try {
-        const data = await fetchTeamSchedule();
+        const data = await fetchMySchedule();
         setAllShifts(data);
       } catch (err) {
         console.error(err);

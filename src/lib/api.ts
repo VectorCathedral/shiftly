@@ -22,8 +22,10 @@ export async function uploadSchedule(file: File) {
 
 
 
-export async function fetchTeamSchedule(): Promise<Shift[]> {
-  const response= await fetch("http://16.28.2.192:8000/shifts");
+export async function fetchMySchedule(): Promise<Shift[]> {
+  const user=getUser();
+
+  const response= await fetch(`http://16.28.2.192:8000/myshifts?email=${encodeURIComponent(user.email)}`);
   
   if (!response.ok){
     throw new Error ("Failed to fetch shifts");

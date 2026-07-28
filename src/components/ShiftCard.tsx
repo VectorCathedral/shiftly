@@ -7,7 +7,7 @@ export function ShiftCard({ shift }: { shift: Shift }) {
     <Card className="p-2 text-xs">
       <div className="flex items-center justify-between">
         <span className="font-medium">{"Voice"}</span>
-        <Badge variant="secondary">{"Test"}</Badge>
+        {/* <Badge variant="secondary">{"Test"}</Badge> */}
       </div>
       <div className="mt-1 text-muted-foreground">
         {shift.clock_in} – {shift.clock_out}
