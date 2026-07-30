@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-route
 import { useEffect, useState } from "react";
 import { getUser, signOut, type AuthUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function AppLayout() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ export function AppLayout() {
             </nav>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <span className="text-sm text-muted-foreground">{user.email}</span>
             <Button
               variant="outline"
