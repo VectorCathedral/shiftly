@@ -24,7 +24,7 @@ export function AppLayout() {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/calendar", label: "Calendar" },
     { to: "/team", label: "Team" },
-    { to: "/my-schedule", label: "My Schedule" },
+    { to: "/my-schedule", label: "Shift Requests" },
   ] as const;
 
   return (
