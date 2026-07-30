@@ -34,11 +34,21 @@ function toMinutes(t: string) {
 }
 
 function duration(shift: Shift) {
+  if (!shift.clock_in || !shift.clock_out) {
+    return { mins: 0, label: "Off" };
+  }
+
   let mins = toMinutes(shift.clock_out) - toMinutes(shift.clock_in);
+
   if (mins < 0) mins += 24 * 60;
+
   const h = Math.floor(mins / 60);
   const m = mins % 60;
-  return { mins, label: m ? `${h}h ${m}m` : `${h}h` };
+
+  return {
+    mins,
+    label: m ? `${h}h ${m}m` : `${h}h`,
+  };
 }
 
 function totalHoursLabel(shifts: Shift[]) {
@@ -311,18 +321,31 @@ function TeamPage() {
                             </div>
 
                             {shift ? (
-                              <>
-                                <div className="mt-2 text-sm font-semibold">
-                                  {shift.clock_in.slice(0, 5)}
-                                </div>
-                                <div className="text-xs text-muted-foreground">–</div>
-                                <div className="text-sm font-semibold">
-                                  {shift.clock_out.slice(0, 5)}
-                                </div>
-                                <div className="mt-2 inline-block rounded-md bg-accent px-2 py-0.5 text-[11px] font-medium text-accent-foreground">
-                                  {duration(shift).label}
-                                </div>
-                              </>
+                              shift.clock_in ? (
+                                <>
+                                  <div className="mt-2 text-sm font-semibold">
+                                    {shift.clock_in.slice(0,5)}
+                                  </div>
+
+                                  <div className="text-xs text-muted-foreground">–</div>
+
+                                  <div className="text-sm font-semibold">
+                                    {shift.clock_out.slice(0,5)}
+                                  </div>
+
+                                  <div className="mt-2 inline-block rounded-md bg-accent px-2 py-0.5 text-[11px] font-medium">
+                                    {duration(shift).label}
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div className="mt-3 text-muted-foreground">OFF</div>
+
+                                  <div className="mt-2 inline-block rounded-md bg-muted px-2 py-0.5 text-[11px]">
+                                    Off Day
+                                  </div>
+                                </>
+                              )
                             ) : (
                               <>
                                 <div className="mt-3 text-muted-foreground">—</div>
@@ -369,7 +392,9 @@ function TeamPage() {
                     </div>
                     <div className="flex items-center gap-4 text-sm">
                       <span>
-                        {shift.clock_in.slice(0, 5)} – {shift.clock_out.slice(0, 5)}
+                       {shift.clock_in
+                        ? `${shift.clock_in.slice(0,5)} – ${shift.clock_out.slice(0,5)}`
+                        : "OFF"}
                       </span>
                       <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground">
                         {duration(shift).label}
