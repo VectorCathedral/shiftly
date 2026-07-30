@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { fetchMySchedule, type Shift } from "@/lib/mock-data";
+import { fetchMySchedule } from "@/lib/api";
+import type { Shift } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -10,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_app/my-schedule")({
   component: MySchedule,
@@ -20,8 +20,10 @@ function MySchedule() {
   const [shifts, setShifts] = useState<Shift[]>([]);
 
   useEffect(() => {
-    fetchMySchedule().then((s) =>
-      setShifts([...s].sort((a, b) => a.date.localeCompare(b.date))),
+    fetchMySchedule().then((data) =>
+      setShifts(
+        [...data].sort((a, b) => a.shift_date.localeCompare(b.shift_date)),
+      ),
     );
   }, []);
 
@@ -38,25 +40,21 @@ function MySchedule() {
             <TableHeader>
               <TableRow>
                 <TableHead>Date</TableHead>
-                <TableHead>Shift</TableHead>
-                <TableHead>Skill</TableHead>
                 <TableHead>Start Time</TableHead>
                 <TableHead>End Time</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {shifts.map((s) => (
-                <TableRow key={s.id}>
-                  <TableCell>{s.date}</TableCell>
-                  <TableCell>{s.type}</TableCell>
-                  <TableCell><Badge variant="secondary">{s.skill}</Badge></TableCell>
-                  <TableCell>{s.startTime}</TableCell>
-                  <TableCell>{s.endTime}</TableCell>
+                <TableRow key={s.shift_id}>
+                  <TableCell>{s.shift_date}</TableCell>
+                  <TableCell>{s.clock_in.slice(0, 5)}</TableCell>
+                  <TableCell>{s.clock_out.slice(0, 5)}</TableCell>
                 </TableRow>
               ))}
               {shifts.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={3} className="text-center text-sm text-muted-foreground">
                     No shifts
                   </TableCell>
                 </TableRow>
